@@ -13,15 +13,9 @@ namespace Microsoft.Unity.VisualStudio.Editor
 	{
 		public static IEnumerable<IVisualStudioInstallation> GetVisualStudioInstallations()
 		{
-#if UNITY_EDITOR_WIN
-			foreach (var installation in VisualStudioForWindowsInstallation.GetVisualStudioInstallations())
+			foreach (var installation in VisualStudioTraeInstallation.GetVisualStudioInstallations())
 				yield return installation;
-#elif UNITY_EDITOR_OSX
-			foreach (var installation in VisualStudioForMacInstallation.GetVisualStudioInstallations())
-				yield return installation;
-#endif
-
-			foreach (var installation in VisualStudioCodeInstallation.GetVisualStudioInstallations())
+			foreach (var installation in VisualStudioCodiumInstallation.GetVisualStudioInstallations())
 				yield return installation;
 		}
 
@@ -29,14 +23,9 @@ namespace Microsoft.Unity.VisualStudio.Editor
 		{
 			try
 			{
-#if UNITY_EDITOR_WIN
-				if (VisualStudioForWindowsInstallation.TryDiscoverInstallation(editorPath, out installation))
+				if (VisualStudioTraeInstallation.TryDiscoverInstallation(editorPath, out installation))
 					return true;
-#elif UNITY_EDITOR_OSX
-				if (VisualStudioForMacInstallation.TryDiscoverInstallation(editorPath, out installation))
-					return true;
-#endif
-				if (VisualStudioCodeInstallation.TryDiscoverInstallation(editorPath, out installation))
+				if (VisualStudioCodiumInstallation.TryDiscoverInstallation(editorPath, out installation))
 					return true;
 			}
 			catch (IOException)
@@ -49,12 +38,8 @@ namespace Microsoft.Unity.VisualStudio.Editor
 
 		public static void Initialize()
 		{
-#if UNITY_EDITOR_WIN
-			VisualStudioForWindowsInstallation.Initialize();
-#elif UNITY_EDITOR_OSX
-			VisualStudioForMacInstallation.Initialize();
-#endif
-			VisualStudioCodeInstallation.Initialize();
+            VisualStudioTraeInstallation.Initialize();
+            VisualStudioCodiumInstallation.Initialize();
 		}
 	}
 }
